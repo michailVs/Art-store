@@ -10,6 +10,9 @@ const of = document.querySelector('.of')
 let artArray = []
 !localStorage.getItem('art') ? artArray = [] : artArray = JSON.parse(localStorage.getItem('art'))
 const addBtn = document.querySelector('.add__art')
+if (addBtn) {
+    
+}
 addBtn.addEventListener('click', () => {
     artArray.push(new art(artImg.value.match(/\w+\.[png, jpg]+/), artTitle.value, artDescr.value, parseInt(artWidth.value), parseInt(artHeight.value), parseInt(artPrice.value)))
     updateLs()
@@ -60,3 +63,4 @@ const removeArt = index => {
     updateLs()
     updateHtml()
 }
+// export { artArray }
