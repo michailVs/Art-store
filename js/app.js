@@ -27,7 +27,7 @@ crossBtn.addEventListener('click', () => {
 })
 // Добавить карточку
 const shopCard = document.querySelector('.shop__col')
-
+const formatter = new Intl.NumberFormat('ru')
 const artCard = async () => {
     let artC = await getData(url)
     for (const key in artC) {
@@ -37,7 +37,7 @@ const artCard = async () => {
             <h2 class="card__title">Название: ${artC[key].title}</h2>
             <p class="card__descr">Описание: ${artC[key].descr}</p>
             <p class="card__size">Размер, мм: ${artC[key].width} X ${artC[key].height}</p>
-            <p class="card__price">Цена: ${artC[key].price} руб.</p>
+            <p class="card__price">Цена: ${formatter.format(artC[key].price)} руб.</p>
         </div>
     `
     }
