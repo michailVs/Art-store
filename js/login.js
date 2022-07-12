@@ -4,8 +4,8 @@ const authBtn = document.querySelector('.auth__btn')
 
 authBtn.addEventListener('click', () => {
     if (login.value === 'admin' && pass.value === 'admin') {
-        const add = document.querySelector('.add')
-        add.style.display = 'flex'
+        const on = document.querySelector('.on')
+        on.style.display = 'flex'
         const of = document.querySelector('.of')
         of.style.display = 'flex'
         const auth = document.querySelector('.auth')

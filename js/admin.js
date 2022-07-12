@@ -18,14 +18,6 @@ const sendData = async (url, data) => {
     }
     return await response.json()
 }
-async function getId() {
-    let response = await fetch('https://62cd28a1a43bf78008529b98.mockapi.io/api/admin/artStore')
-    let id = await response.json()
-    for (key in id) {
-        key = ++key
-    }
-}
-getId()
 const of = document.querySelector('.of')
 let artArray = []
 !localStorage.getItem('art') ? artArray = [] : artArray = JSON.parse(localStorage.getItem('art'))
@@ -79,10 +71,8 @@ function createArt(art, index) {
         </div>
     `
 }
-let key
 const removeArt = index => {
     artArray.splice(index, 1)
-    fetch(`https://62cd28a1a43bf78008529b98.mockapi.io/api/admin/artStore/${key}`, {method: 'DELETE'})
     updateLs()
     updateHtml()
 }

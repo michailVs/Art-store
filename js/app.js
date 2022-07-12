@@ -36,7 +36,7 @@ const artCard = async () => {
             <img src="images\\${artC[key].img}" alt="${artC[key].title}" class="card__img">
             <h2 class="card__title">Название: ${artC[key].title}</h2>
             <p class="card__descr">Описание: ${artC[key].descr}</p>
-            <p class="card__size">Размер: ${artC[key].width} X ${artC[key].height}</p>
+            <p class="card__size">Размер, мм: ${artC[key].width} X ${artC[key].height}</p>
             <p class="card__price">Цена: ${artC[key].price} руб.</p>
         </div>
     `
