@@ -1,17 +1,17 @@
-const artImg = document.querySelector('.add__img').value.match(/\w+\.[png, jpg]+/)
-const artTitle = document.querySelector('.add__title').value
-const artDescr = document.querySelector('.add__descr').value
-const artWidth = parseInt(document.querySelector('.add__width').value)
-const artHeight = parseInt(document.querySelector('.add__height').value)
-const artPrice = parseInt(document.querySelector('.add__price').value)
+const artImg = document.querySelector('.add__img')
+const artTitle = document.querySelector('.add__title')
+const artDescr = document.querySelector('.add__descr')
+const artWidth = document.querySelector('.add__width')
+const artHeight = document.querySelector('.add__height')
+const artPrice = document.querySelector('.add__price')
 
 
 const of = document.querySelector('.of')
 let artArray = []
-!localStorage.artArray ? artArray = [] : artArray = JSON.parse(localStorage.getItem('art'))
+!localStorage.getItem('art') ? artArray = [] : artArray = JSON.parse(localStorage.getItem('art'))
 const addBtn = document.querySelector('.add__art')
 addBtn.addEventListener('click', () => {
-    artArray.push(new art(artImg, artTitle, artDescr, artWidth, artHeight, artPrice))
+    artArray.push(new art(artImg.value.match(/\w+\.[png, jpg]+/), artTitle.value, artDescr.value, parseInt(artWidth.value), parseInt(artHeight.value), parseInt(artPrice.value)))
     updateLs()
     updateHtml()
     document.querySelector('.add__width').value = ''
@@ -42,7 +42,7 @@ updateHtml()
 const updateLs = () => {
     localStorage.setItem('art', JSON.stringify(artArray))
 }
-const createArt = (art, index) => {
+function createArt(art, index) {
     return `
         <div class="out">
             <img src="images\\${art.img}" alt="${art.title}">
