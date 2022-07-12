@@ -144,7 +144,7 @@ body.noscroll {
   display: grid;
   grid-template-columns: repeat(auto-fill, 300px);
   grid-auto-rows: auto;
-  grid-gap: 61px;
+  grid-gap: 25px;
   justify-content: center;
 }
 

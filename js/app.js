@@ -1,8 +1,13 @@
 // Импорт значений artArray из админки
-// import { artArray } from './admin.js'
-console.log(localStorage.getItem('art'))
-const artCard = JSON.parse(localStorage.getItem('art'))
-
+const url = 'https://62cd28a1a43bf78008529b98.mockapi.io/api/admin/artStore'
+const getData = async (url) => {
+    const response = await fetch(url)
+    if (!response.ok) {
+        throw new Error(`Ошибка по адресу: ${url}; Статус ошибки: ${response.status}`)
+    }
+    return await response.json()
+}
+    
 // Открыть контакты
 const contactBtn = document.querySelector('.contact__btn')
 const popContact = document.querySelector('.pop')
@@ -23,23 +28,18 @@ crossBtn.addEventListener('click', () => {
 // Добавить карточку
 const shopCard = document.querySelector('.shop__col')
 
-function createCard(art) {
-    return `
+const artCard = async () => {
+    let artC = await getData(url)
+    for (const key in artC) {
+        shopCard.innerHTML += `
         <div class="card">
-            <img src="images\\${art.img}" alt="${art.title}" class="card__img">
-            <h2 class="card__title">Название: ${art.title}</h2>
-            <p class="card__descr">Описание: ${art.descr}</p>
-            <p class="card__size">Размер: ${art.width} X ${art.height}</p>
-            <p class="card__price">Цена: ${art.price} руб.</p>
+            <img src="images\\${artC[key].img}" alt="${artC[key].title}" class="card__img">
+            <h2 class="card__title">Название: ${artC[key].title}</h2>
+            <p class="card__descr">Описание: ${artC[key].descr}</p>
+            <p class="card__size">Размер: ${artC[key].width} X ${artC[key].height}</p>
+            <p class="card__price">Цена: ${artC[key].price} руб.</p>
         </div>
     `
-}
-const updateHtml = () => {
-    shopCard.innerHTML = ""
-    if (artCard.length > 0) {
-        artCard.forEach((item) => {
-            shopCard.innerHTML += createCard(item)
-        })
     }
 }
-updateHtml()
+artCard()
