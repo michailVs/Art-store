@@ -29,7 +29,7 @@ const getData = async () => {
         for (const key in content) {
             of.innerHTML += `
                 <div class="out">
-                    <img src="images\\${content[key].img}" alt="${content[key].title}">
+                    <img src="${content[key].img}" alt="${content[key].title}">
                     <h2 class="out__title">Название: ${content[key].title}</h2>
                     <p class="out__descr">Описание: ${content[key].descr}</p>
                     <p class="out__size">Размер: ${content[key].width} X ${content[key].height}</p>
@@ -43,7 +43,7 @@ const getData = async () => {
 getData()
 const updateDb = async () => {
     const sendCard = async () => {
-        const cartList = new art(artImg.value.match(/\w+\.[png, jpg]+/), artTitle.value, artDescr.value, parseInt(artWidth.value), parseInt(artHeight.value), parseInt(artPrice.value))
+        const cartList = new art(artImg.value, artTitle.value, artDescr.value, parseInt(artWidth.value), parseInt(artHeight.value), parseInt(artPrice.value))
         await sendData('https://62cd28a1a43bf78008529b98.mockapi.io/api/admin/artStore', cartList)
     }
     await sendCard()

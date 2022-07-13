@@ -33,7 +33,7 @@ const artCard = async () => {
     for (const key in artC) {
         shopCard.innerHTML += `
         <div class="card">
-            <img src="images\\${artC[key].img}" alt="${artC[key].title}" class="card__img">
+            <img src="${artC[key].img}" alt="${artC[key].title}" class="card__img" data-img="img">
             <h2 class="card__title">Название: ${artC[key].title}</h2>
             <p class="card__descr">Описание: ${artC[key].descr}</p>
             <p class="card__size">Размер, мм: ${artC[key].width} X ${artC[key].height}</p>
@@ -43,3 +43,23 @@ const artCard = async () => {
     }
 }
 artCard()
+
+// Увелечение картинки при клике
+window.addEventListener('click', e => {
+    const shop = document.querySelector('.shop')
+    if (e.target.dataset.img === 'img') {
+        const card = e.target.closest('.card')
+        const imgCard = card.querySelector('.card__img').getAttribute('src')
+        shop.style.display = 'none'
+        document.querySelector('.msize__out').innerHTML = `
+        <div class="msize__cont">
+            <img src="${imgCard}" alt="" class="msize__cont-img">
+            <img src="images/close.png" alt="Close cross" class="msize__cont-cross">
+        </div>
+    `
+    }
+    document.querySelector('.msize__cont-cross').addEventListener('click', () => {
+        document.querySelector('.msize__out').innerHTML = ''
+        shop.removeAttribute('style')
+    })
+})
