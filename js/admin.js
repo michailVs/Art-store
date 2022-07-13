@@ -5,6 +5,8 @@ const artWidth = document.querySelector('.add__width')
 const artHeight = document.querySelector('.add__height')
 const artPrice = document.querySelector('.add__price')
 
+const of = document.querySelector('.of')
+
 const sendData = async (url, data) => {
     const response = await fetch(url, {
         method: 'POST',
@@ -18,19 +20,38 @@ const sendData = async (url, data) => {
     }
     return await response.json()
 }
-const of = document.querySelector('.of')
-let artArray = []
-!localStorage.getItem('art') ? artArray = [] : artArray = JSON.parse(localStorage.getItem('art'))
+const getData = async () => {
+    let cartArray = await fetch('https://62cd28a1a43bf78008529b98.mockapi.io/api/admin/artStore')
+    let content = await cartArray.json()
+    
+    of.innerHTML = ""
+    if (content.length > 0) {
+        for (const key in content) {
+            of.innerHTML += `
+                <div class="out">
+                    <img src="images\\${content[key].img}" alt="${content[key].title}">
+                    <h2 class="out__title">Название: ${content[key].title}</h2>
+                    <p class="out__descr">Описание: ${content[key].descr}</p>
+                    <p class="out__size">Размер: ${content[key].width} X ${content[key].height}</p>
+                    <p class="out__price">Цена: ${content[key].price} руб.</p>
+                    <button onclick="removeCart(${content[key].id})" class="out__remove">Удалить карточку</button>
+                </div>
+            `
+        }
+    }
+}
+getData()
+const updateDb = async () => {
+    const sendCard = async () => {
+        const cartList = new art(artImg.value.match(/\w+\.[png, jpg]+/), artTitle.value, artDescr.value, parseInt(artWidth.value), parseInt(artHeight.value), parseInt(artPrice.value))
+        await sendData('https://62cd28a1a43bf78008529b98.mockapi.io/api/admin/artStore', cartList)
+    }
+    await sendCard()
+    await getData()
+}
 const addBtn = document.querySelector('.add__art')
 addBtn.addEventListener('click', () => {
-    artArray.push(new art(artImg.value.match(/\w+\.[png, jpg]+/), artTitle.value, artDescr.value, parseInt(artWidth.value), parseInt(artHeight.value), parseInt(artPrice.value)))
-    updateLs()
-    updateHtml()
-    const sendCard = () => {
-        const cartList = new art(artImg.value.match(/\w+\.[png, jpg]+/), artTitle.value, artDescr.value, parseInt(artWidth.value), parseInt(artHeight.value), parseInt(artPrice.value))
-        sendData('https://62cd28a1a43bf78008529b98.mockapi.io/api/admin/artStore', cartList)
-    }
-    sendCard()
+    updateDb()
     document.querySelector('.add__width').value = ''
     document.querySelector('.add__img').value = ''
     document.querySelector('.add__height').value = ''
@@ -46,33 +67,7 @@ function art(img, title, descr, width, height, price) {
     this.height = height
     this.price = price
 }
-const updateHtml = () => {
-    of.innerHTML = ""
-    if (artArray.length > 0) {
-        artArray.forEach((item, index) => {
-            of.innerHTML += createArt(item, index)
-        })
-    }
-}
-updateHtml()
-
-const updateLs = () => {
-    localStorage.setItem('art', JSON.stringify(artArray))
-}
-function createArt(art, index) {
-    return `
-        <div class="out">
-            <img src="images\\${art.img}" alt="${art.title}">
-            <h2 class="out__title">Название: ${art.title}</h2>
-            <p class="out__descr">Описание: ${art.descr}</p>
-            <p class="out__size">Размер: ${art.width} X ${art.height}</p>
-            <p class="out__price">Цена: ${art.price} руб.</p>
-            <button onclick="removeArt(${index})" class="out__remove">Удалить карточку</button>
-        </div>
-    `
-}
-const removeArt = index => {
-    artArray.splice(index, 1)
-    updateLs()
-    updateHtml()
+const removeCart = async id => {
+    await fetch(`https://62cd28a1a43bf78008529b98.mockapi.io/api/admin/artStore/${id}`, {method: 'DELETE'})
+    await getData()
 }
