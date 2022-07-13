@@ -194,7 +194,6 @@ body.noscroll {
   margin-bottom: 13px;
   -o-object-fit: cover;
      object-fit: cover;
-  position: relative;
   cursor: pointer;
 }
 .card__title {
