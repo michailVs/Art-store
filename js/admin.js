@@ -47,7 +47,7 @@ const updateDb = async () => {
         await sendData('https://62cd28a1a43bf78008529b98.mockapi.io/api/admin/artStore', cartList)
     }
     await sendCard()
-    await getData()
+    getData()
 }
 const addBtn = document.querySelector('.add__art')
 addBtn.addEventListener('click', () => {
@@ -69,5 +69,5 @@ function art(img, title, descr, width, height, price) {
 }
 const removeCart = async id => {
     await fetch(`https://62cd28a1a43bf78008529b98.mockapi.io/api/admin/artStore/${id}`, {method: 'DELETE'})
-    await getData()
+    getData()
 }
