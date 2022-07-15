@@ -86,13 +86,8 @@ const removeCart = async id => {
 
 // Отправка добавленной карточки в приватный телеграм чат
 function sendMessageTg(item) {
-    fetch(`https://api.telegram.org/(YOUR TOKEN)/sendMessage?chat_id=(YOUR CHAT ID)&text=
-    Название: ${item.title},
-    \nОписание: ${item.descr},
-    \nРазмер: ${item.width} X ${item.height},
-    \nЦена: ${item.price},
-    \nКартинка: ${item.img}
-    `)
+    fetch(`https://api.telegram.org/TOKEN/sendMessage?chat_id=CHAT ID&text=
+    Название: ${item.title}%0AОписание: ${item.descr}%0AРазмер: ${item.width} X ${item.height}%0AЦена: ${item.price}%0AКартинка: ${item.img}`)
 }
 // Получить все карточки в тг
 const allCardSendBtn = document.querySelector('.all__card')
