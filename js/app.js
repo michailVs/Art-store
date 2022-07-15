@@ -1,4 +1,4 @@
-// Импорт значений artArray из админки
+// Импорт значений artArray из бд
 const url = 'https://62cd28a1a43bf78008529b98.mockapi.io/api/admin/artStore'
 const getData = async (url) => {
     const response = await fetch(url)
@@ -25,7 +25,8 @@ crossBtn.addEventListener('click', () => {
     popContact.classList.remove('active')
     body.classList.remove('noscroll')
 })
-// Добавить карточку
+
+// Получение данных из бд и вывод карточки
 const shopCard = document.querySelector('.shop__col')
 const formatter = new Intl.NumberFormat('ru')
 const artCard = async () => {
@@ -50,13 +51,15 @@ window.addEventListener('click', e => {
     if (e.target.dataset.img === 'img') {
         const card = e.target.closest('.card')
         const imgCard = card.querySelector('.card__img').getAttribute('src')
-        shop.style.display = 'none'
-        document.querySelector('.msize__out').innerHTML = `
-        <div class="msize__cont">
-            <img src="${imgCard}" alt="" class="msize__cont-img">
-            <img src="images/close.png" alt="Close cross" class="msize__cont-cross">
-        </div>
-    `
+        if (imgCard.length > 0) {
+            shop.style.display = 'none'
+            document.querySelector('.msize__out').innerHTML = `
+            <div class="msize__cont">
+                <img src="${imgCard}" alt="" class="msize__cont-img">
+                <img src="images/close.png" alt="Close cross" class="msize__cont-cross">
+            </div>
+        `
+        }
     }
     document.querySelector('.msize__cont-cross').addEventListener('click', () => {
         document.querySelector('.msize__out').innerHTML = ''
