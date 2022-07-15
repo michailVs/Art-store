@@ -156,3 +156,20 @@ body {
         }
     }
 }
+
+.all {
+    display: none;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    &__card {
+        padding: 10px;
+        color: rgba(101, 79, 79, 1);
+        background-color: rgba(250, 240, 190, 1);
+        border: 1px solid rgba(101, 79, 79, 1);
+        border-radius: 10px;
+        &:hover {
+            background-color: rgba(244, 200, 200, 1);
+        }
+    }
+}

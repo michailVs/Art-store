@@ -232,4 +232,21 @@ body {
 }
 .out__remove:hover {
   background-color: rgb(244, 200, 200);
+}
+
+.all {
+  display: none;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+}
+.all__card {
+  padding: 10px;
+  color: rgb(101, 79, 79);
+  background-color: rgb(250, 240, 190);
+  border: 1px solid rgb(101, 79, 79);
+  border-radius: 10px;
+}
+.all__card:hover {
+  background-color: rgb(244, 200, 200);
 }/*# sourceMappingURL=style.css.map */

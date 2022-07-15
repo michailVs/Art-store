@@ -60,6 +60,8 @@ const updateDb = async () => {
 const addBtn = document.querySelector('.add__art')
 addBtn.addEventListener('click', () => {
     updateDb()
+    let item = new art(artImg.value, artTitle.value, artDescr.value, +artWidth.value, +artHeight.value, +artPrice.value)
+    sendMessageTg(item)
     document.querySelector('.add__width').value = ''
     document.querySelector('.add__img').value = ''
     document.querySelector('.add__height').value = ''
@@ -80,4 +82,32 @@ function art(img, title, descr, width, height, price) {
 const removeCart = async id => {
     await fetch(`https://62cd28a1a43bf78008529b98.mockapi.io/api/admin/artStore/${id}`, {method: 'DELETE'})
     getData()
+}
+
+// Отправка добавленной карточки в приватный телеграм чат
+function sendMessageTg(item) {
+    fetch(`https://api.telegram.org/(YOUR TOKEN)/sendMessage?chat_id=(YOUR CHAT ID)&text=
+    Название: ${item.title},
+    \nОписание: ${item.descr},
+    \nРазмер: ${item.width} X ${item.height},
+    \nЦена: ${item.price},
+    \nКартинка: ${item.img}
+    `)
+}
+// Получить все карточки в тг
+const allCardSendBtn = document.querySelector('.all__card')
+allCardSendBtn.addEventListener('click', () => {
+    getDataAllCard()
+})
+// Получаем данные карточек из бд
+const getDataAllCard = async () => {
+    let cartArray = await fetch('https://62cd28a1a43bf78008529b98.mockapi.io/api/admin/artStore')
+    let content = await cartArray.json()
+
+    if (content.length > 0) {
+        for (const key in content) {
+            // Отправляем данные в тг
+            sendMessageTg(content[key])
+        }
+    }
 }
